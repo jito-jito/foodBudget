@@ -1,39 +1,41 @@
 backend/node_modules
-web-client/node_modules
+frontend/node_modules
+backend/.env
+frontend/.env
+
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-web-client/node_modules
-web-client/.pnp
-web-client/.pnp.js
+frontend/.pnp
+frontend/.pnp.js
 
 # testing
-web-client/coverage
+frontend/coverage
 
 # next.js
-web-client/.next/
-web-client/out/
+frontend/.next/
+frontend/out/
 
 # production
-web-client/build
+frontend/build
 
 # misc
-web-client/.DS_Store
-web-client/*.pem
+frontend/.DS_Store
+frontend/*.pem
 
 # debug
-web-client/npm-debug.log*
-web-client/yarn-debug.log*
-web-client/yarn-error.log*
-web-client/.pnpm-debug.log*
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
 
 # local env files
-web-client/.env*.local
+frontend/.env*.local
 
 # vercel
-web-client/.vercel
+frontend/.vercel
 
 # typescript
-web-client/*.tsbuildinfo
-web-client/next-env.d.ts
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
