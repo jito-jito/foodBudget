@@ -1,4 +1,6 @@
+import Button from '../../../components/Button'
 import SelectInput from '../../../components/SelectInput'
+import styles from './Form.module.css'
 
 export default function ({ 
   onSubmitData,
@@ -26,8 +28,8 @@ export default function ({
             placeholder="fideos" 
             type='text' 
           />
-          <input 
-            className="form-button" 
+          <Button 
+            className={styles.formButton}
             value="Buscar" 
             type='submit' 
           />
@@ -87,15 +89,7 @@ export default function ({
           font-size: 15px;
         }
 
-        .form-button {
-          width: 13%;
-          height: 30px;
-          margin-left: 10px;
-          border-radius: 12px;
-          background-color: #2E3F53;
-          color: white;
-          font-size: 15px;
-        }      
+        
       `}</style>
     </>
   )

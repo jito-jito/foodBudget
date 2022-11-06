@@ -2,8 +2,13 @@ import React from 'react'
 import Form from './form'
 import Button from '../../components/Button'
 import fakeFetch from '../../utils/fakeFetch'
+import styles from './Search.module.css'
 
-export default function({globalState, addProduct}) {
+export default function({
+  globalState, 
+  addProduct, 
+  removeProduct
+}) {
   const [products, setData] = React.useState({
     data: [],
     totalResults: 0,
@@ -56,8 +61,8 @@ export default function({globalState, addProduct}) {
 
   }
 
-  const onAddProduct = (e, p) => {
-    console.log(p)
+  const hasSavedProduct = (currentProduct) => {
+    return globalState.some(savedProduct => savedProduct.description == currentProduct.description)
   }
 
   return (
@@ -99,6 +104,7 @@ export default function({globalState, addProduct}) {
                 <h3>Marca</h3>
                 <h3>Precio Unitario</h3>
                 <h3>url</h3>
+                <h3>Agregar</h3>
               </div>
               <div className="table-results">
                 {
@@ -113,7 +119,12 @@ export default function({globalState, addProduct}) {
                             <p>
                               <a href={product.link}>link</a>
                             </p>
-                            <Button onClick={( ) => addProduct(product)}>add</Button>
+                            <div className={styles.tableProductsButtonContainer}>
+                              {hasSavedProduct(product) ?
+                                 <Button className={styles.tableProductsButtonRemove}onClick={() => removeProduct(product)}></Button> :
+                                 <Button className={styles.tableProductsButtonAdd}onClick={() => addProduct(product)}></Button>
+                              }
+                            </div>
                           </div>
                         )
                       })
@@ -209,8 +220,9 @@ export default function({globalState, addProduct}) {
           width: 100%;
           border-bottom: 2px solid white;
         }
+        
         .table-description > h3, .table-product > p {
-          width: 11.25vw;
+          width: 9vw;
           padding-left: 10px;
           text-align: center;
         }
