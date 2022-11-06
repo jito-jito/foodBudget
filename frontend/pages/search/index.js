@@ -1,7 +1,9 @@
 import React from 'react'
 import Form from './form'
+import Button from '../../components/Button'
+import fakeFetch from '../../utils/fakeFetch'
 
-export default function() {
+export default function({globalState, addProduct}) {
   const [products, setData] = React.useState({
     data: [],
     totalResults: 0,
@@ -13,7 +15,6 @@ export default function() {
     Tottus: false, 
     SantaIsabel: false
   })
- 
  
   const onSearch = async (e) => {
     e.preventDefault()
@@ -27,14 +28,23 @@ export default function() {
       const searchKey = e.target[1].value
       const selectedOptions = Object.entries(options).map(option => option[1] === true ? option[0] : ' ').filter(option => option.length > 2)
   
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}food/?markets=[${selectedOptions}]&key=${searchKey}`)
-      const data = await response.json()
-      
+      // const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}food/?markets=[${selectedOptions}]&key=${searchKey}`)
+      // const data = await response.json()
+      const data = await fakeFetch()
+      console.log(data)
+      // setData({
+      //   data: data.results,
+      //   totalResults: data.totalResults,
+      //   loading: false
+      // })
       setData({
-        data: data.results,
-        totalResults: data.totalResults,
-        loading: false
-      })
+          data: [{
+            products: data,
+            marketName: 'SantaIsabel'
+          }],
+          totalResults: data.length,
+          loading: false
+        })
     } catch (error) {
       setData({
         data: [],
@@ -44,6 +54,10 @@ export default function() {
     }
 
 
+  }
+
+  const onAddProduct = (e, p) => {
+    console.log(p)
   }
 
   return (
@@ -99,6 +113,7 @@ export default function() {
                             <p>
                               <a href={product.link}>link</a>
                             </p>
+                            <Button onClick={( ) => addProduct(product)}>add</Button>
                           </div>
                         )
                       })
