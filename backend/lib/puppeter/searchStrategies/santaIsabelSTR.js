@@ -45,45 +45,36 @@ async function getProducts(pageInstance, selectors) {
 
 const santaIsabelSTR = async (pageInstance, searchKey) => {
   try {
+    await pageInstance.goto(santaIsabelSLT.mainLink)
+    await pageInstance.click(santaIsabelSLT.search.input, {
+        delay: 500
+    })
+    await writeLetterByLetter(pageInstance, searchKey)
+    await pageInstance.keyboard.press('Enter', {delay: 1500})
+    await pageInstance.waitForSelector(santaIsabelSLT.products.item)
 
-  await pageInstance.goto(santaIsabelSLT.mainLink)
-  await pageInstance.click(santaIsabelSLT.search.input, {
-      delay: 500
-  })
-  await writeLetterByLetter(pageInstance, searchKey)
-  await pageInstance.keyboard.press('Enter', {delay: 1500})
-  await pageInstance.waitForSelector(santaIsabelSLT.products.item)
+    let data = []
+    data.push(await getProducts(pageInstance, santaIsabelSLT))
+    
 
-  let data = []
-  data.push(await getProducts(pageInstance, santaIsabelSLT))
-
-
-  
-    const hasSlides = await pageInstance.waitForSelector(santaIsabelSLT.slides.unselectedSlide, {timeout: 5000})
     const slidesButtons = await pageInstance.$$(santaIsabelSLT.slides.unselectedSlide)
 
-    for await (button of slidesButtons) {
-      console.time('evaluate work')
-      // await pageInstance.evaluate(slideButton => {
-      //   console.log(slideButton)
-      //   slideButton.click()
-      //   return Promise.resolve()
-      // }, button)
-      button.evaluate(b => b.click())
-      // await button.click()
-      console.timeEnd('evaluate work')
-      // await waitForTime({ time: 5000 })
-      await pageInstance.waitForNavigation() 
-      console.log('click', button)
+    if(slidesButtons.length > 0) {
+      for await (button of slidesButtons) {
+        await pageInstance.evaluate((slideButton, selectors) => {
+          const slideButtons = document.querySelectorAll(selectors.slides.unselectedSlide)
+          let target;
+          slideButtons.forEach(b => b.textContent == slideButton.textContent ? target = b : '')
+          target.click()
+        }, button, santaIsabelSLT)
 
-      const productsInPage = await getProducts(pageInstance, santaIsabelSLT)
-      console.log('products in page ', productsInPage.length)
-      await data.push(productsInPage)
-      console.log('total element received= ', data.length)
+        await waitForTime({time: 3500})
+
+        const productsInPage = await getProducts(pageInstance, santaIsabelSLT)
+        await data.push(productsInPage)
+      }
     }
-    console.log('after loop')
-
-    
+      
     return data
 
   } catch (error) {
