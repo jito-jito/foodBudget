@@ -1,8 +1,9 @@
 import React from 'react'
+import Title from '../../components/Title'
 import Form from './form'
-import Button from '../../components/Button'
+import ResultsContainer from '../../components/ResultsContainer'
+import ProductItem from '../../components/ResultsContainer/ProductItem'
 import fakeFetch from '../../utils/fakeFetch'
-import styles from './Search.module.css'
 
 export default function({
   globalState, 
@@ -20,7 +21,7 @@ export default function({
     Tottus: false, 
     SantaIsabel: false
   })
- 
+ console.log(products)
   const onSearch = async (e) => {
     e.preventDefault()
     setData({
@@ -67,7 +68,7 @@ export default function({
 
   return (
     <main className="page">
-      <h1 className="page-title">Presupuesta tu comida</h1>
+      <Title>Presupuesta tu comida</Title>
       <h2 className="page-subtitle">Busca la comida que deseas cotizar</h2>
       
       <Form 
@@ -95,51 +96,36 @@ export default function({
           </div>  
         }
         { products.data.length > 0 && products.loading === false &&
-          <div className="page-resultsContainer-loaded">
-            <h2>{products.totalResults} resultados encontrados!</h2>
-            <div className="table">
-              <div className="table-description">
-                <h3>Nombre</h3>
-                <h3>Tienda</h3>
-                <h3>Marca</h3>
-                <h3>Precio Unitario</h3>
-                <h3>url</h3>
-                <h3>Agregar</h3>
-              </div>
-              <div className="table-results">
-                {
-                  products.data.map((object) => (
-                      object.products.map((product, index) => {
-                        return (
-                          <div className="table-product" key={index}>
-                            <p>{product.description}</p>
-                            <p>{object.marketName}</p>
-                            <p>{product.brand}</p>
-                            <p>{product.singlePrice}</p>
-                            <p>
-                              <a href={product.link}>link</a>
-                            </p>
-                            <div className={styles.tableProductsButtonContainer}>
-                              {hasSavedProduct(product) ?
-                                 <Button className={styles.tableProductsButtonRemove}onClick={() => removeProduct(product)}></Button> :
-                                 <Button className={styles.tableProductsButtonAdd}onClick={() => addProduct(product)}></Button>
-                              }
-                            </div>
-                          </div>
-                        )
-                      })
+          <ResultsContainer 
+            className="page-resultsContainer-loaded"
+            title={`${products.totalResults} resultados encontrados!`}  
+          >
+            {
+              products.data.map((object) => (
+                  object.products.map((product, index) => {
+                    return (
+                      <ProductItem
+                        key={index}
+                        hasSavedProduct={hasSavedProduct(product)}
+                        onAddProduct={() => addProduct(product)}
+                        onRemoveProduct={() => removeProduct(product)}
+                        description={product.description}
+                        marketName={object.marketName}
+                        brand={product.brand}
+                        singlePrice={product.singlePrice}
+                        link={product.link}
+                      />
                     )
-                  )
-                }
-              </div>
-            </div>
-          </div>
+                  })
+                )
+              )
+            }
+          </ResultsContainer>
         }
       </section>
       
 
       <style global jsx>{`
-      
         body {
           display: flex;
           flex-direction: column;
@@ -159,11 +145,6 @@ export default function({
           height: 100%;
         }
 
-        .page-title {
-          margin: 25px 0 10px 0;
-          font-size: 28px;
-          font-weight: bold;
-        }
         .page-subtitle {
           margin: 10px 0;
           font-size: 24px;
@@ -179,20 +160,16 @@ export default function({
           border-radius: 25px;
         }
         .page-resultsContainer {
-          display: flex;
-          flex-direction: column;
+          display:flex;
           align-items: center;
           justify-content: center;
           height: 50vh;
         }
         .page-resultsContainer-loaded {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
           height: 95vh;
         }
 
-        .table {
+        {/* .table {
           display: flex;
           flex-direction: column;
           width: 95vw;
@@ -229,7 +206,7 @@ export default function({
         .table-description > h3:first-child, .table-product > p:first-child {
           width: 50vw;
           text-align: left;
-        }
+        } */}
       `}</style>
     </main>
   )

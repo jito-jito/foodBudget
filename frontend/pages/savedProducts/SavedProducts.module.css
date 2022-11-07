@@ -1,0 +1,16 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 35px;
+  text-align: center;
+}
+
+.productsContainer {
+  align-self: stretch;
+  max-height: 70vh;
+  padding: 10px 25px;
+  box-sizing: border-box;
+  background-color: #E2F4ED;
+  border-radius: 25px;
+}

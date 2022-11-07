@@ -1,0 +1,74 @@
+.resultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* .resultsContainerLoaded {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 95vw;
+  height: 100%;
+  border: 1px solid white;
+  padding: 0 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  
+}
+.tableDescription, .tableResults, .table-product {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.tableResults {
+  flex-direction: column;
+}
+.tableDescription {
+  align-items: center;
+  border-bottom: 4px solid white;
+}
+.tableProduct {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2px solid white;
+}
+
+.tableDescription > h3, .tableProduct > p {
+  width: 12vw;
+  padding-left: 10px;
+  text-align: center;
+}
+.tableDescription > h3:first-child, .tableProduct > p:first-child {
+  width: 40vw;
+  text-align: left;
+}
+
+.tableProductsButtonContainer {
+  width: 12vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tableProductsButtonAdd, .tableProductsButtonRemove {
+  width: 33px;
+  height: 33px;
+  border: 1px solid black;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.tableProductsButtonAdd {
+  background-color: #2C3D51;
+  background-image: url('../../public/listIconLight.png');
+}
+.tableProductsButtonRemove {
+  background-color: #ffffff;
+  background-image: url('../../public/removeIcon.png');
+}
