@@ -35,7 +35,7 @@ async function getProducts(pageInstance, selectors) {
         img: p.querySelector(selectors.products.img)?.src || 'unable content'
       }
     ))
-  
+
 
     return productsData
   }, selectors)
@@ -55,7 +55,7 @@ const santaIsabelSTR = async (pageInstance, searchKey) => {
 
     let data = []
     data.push(await getProducts(pageInstance, santaIsabelSLT))
-    
+
 
     const slidesButtons = await pageInstance.$$(santaIsabelSLT.slides.unselectedSlide)
 
@@ -74,16 +74,16 @@ const santaIsabelSTR = async (pageInstance, searchKey) => {
         await data.push(productsInPage)
       }
     }
-      
-    return data
+
+      // return data
 
   } catch (error) {
     console.log('not ok')
-    console.log(error)
-    return error
+    // console.log(error)
+    // return error
   }
 
-  
+
 }
 
 

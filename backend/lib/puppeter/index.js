@@ -30,7 +30,6 @@ async function searchInPage(strategy, searchKey) {
   // await browser.close()
   // return data
 
-  return data
 }
 
 module.exports = searchInPage

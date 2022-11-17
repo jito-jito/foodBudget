@@ -23,18 +23,18 @@ async function searchProducts(searchKey, options) {
     }) 
   })
   
-  const results = await Promise.allSettled(productsData)
-  console.log(results)
-  let response = {
-    error: false,
-    results: results.map(response => response.value)
+  // const results = await Promise.allSettled(productsData)
+  // console.log(results)
+  // let response = {
+  //   error: false,
+  //   results: results.map(response => response.value)
     
-  }
-  response.totalResults = response.results.length > 1 ? reduce((prev, curr) => {
-    return prev.products.length + curr.products.length
-  }) : response.results[0].products.length
+  // }
+  // response.totalResults = response.results.length > 1 ? reduce((prev, curr) => {
+  //   return prev.products.length + curr.products.length
+  // }) : response.results[0].products.length
   
-  return response
+  // return response
 };
 
 
